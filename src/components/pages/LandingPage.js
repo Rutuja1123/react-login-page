@@ -9,8 +9,7 @@ function LandingPage() {
     axios.defaults.withCredentials = true;
     let currentState = '';
     useEffect(() => {
-      // axios.get('http://localhost:8001')
-      axios.get("https://lwa-poc-backend.vercel.app")
+      axios.get("https://example-backend.com")
       .then( res => {
         console.log(currentState = res.data.Status)
         if (currentState === "success"){
@@ -22,8 +21,7 @@ function LandingPage() {
     });
 
     const handleDelete = () => {
-      // axios.get('http://localhost:8001/logout')
-      axios.get("https://lwa-poc-backend.vercel.app/logout")
+      axios.get("https://example-backend.com/logout")
       .then(res => {
         window.location.reload(true);
       }).catch(err => console.log(err));

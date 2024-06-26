@@ -16,8 +16,6 @@ function LoginPage() {
 
   // netlify
     window.amazon.Login.setClientId('amzn1.application-oa2-client.239fa509e746486e8efcbf36a4e9e709'); 
-  // localhost
-  //   window.amazon.Login.setClientId('amzn1.application-oa2-client.b9bfa72ebbce4766807145912506899d');
 
   <div id="amazon-root"></div>;
 
@@ -43,9 +41,6 @@ function LoginPage() {
   const handleClick = () => {
     var options = {};
     options.scope = "profile";
-    // options.scope_data = {
-    //   profile: { essential: false },
-    // };
     options.pkce = true; // SDK generates a `code_verifier` and `code_challenge`
     window.amazon.Login.authorize(options, function (response) {
       if (response.error) {
@@ -88,7 +83,6 @@ function LoginPage() {
         'Authorization': 'Bearer ' + response.access_token,
         'Content-Type': "application/json;charset=UTF-8"
         };
-        fetch(aclurl, {method: 'POST', body: JSON.stringify(aclPayload), headers: headers}).then((res) => console.log(res));
 
         console.log("aclValues" + aclvalues);
 
@@ -97,8 +91,7 @@ function LoginPage() {
                window.console.log(response);
 
             try {
-                // axios.post("http://localhost:8001/amazon/profile", response.profile)
-                axios.post("https://lwa-poc-backend.vercel.app/amazon/profile", response.profile)
+                axios.post("https://example-backend.com/amazon/profile", response.profile)
                 .then((res) => console.log(res.data.Status === "OK"))
                 .then(navigate("/"));
     
@@ -110,8 +103,7 @@ function LoginPage() {
         
 
         try {
-            // axios.post("http://localhost:8001/auth/token", aclvalues)
-            axios.post("https://lwa-poc-backend.vercel.app/auth/token", aclvalues)
+            axios.post("https://example-backend.com/auth/token", aclvalues)
             .then((res) => console.log(res));
 
         } catch (error) {
@@ -127,8 +119,7 @@ function LoginPage() {
   const handleSubmit = (event) => {
     event.preventDefault();
     axios
-      // .post("http://localhost:8001/login", values)
-      .post("https://lwa-poc-backend.vercel.app/login", values)
+      .post("https://example-backend.com/login", values)
       .then(res => console.log(res.data.Status + (currentState = res.data.Status)))
       .then(res => {
         if (currentState === "success") {
@@ -141,7 +132,6 @@ function LoginPage() {
   window.addEventListener("message", function (event) {
     if (event.origin === "https://na.account.amazon.com/") {
       console.log("Received message:", event.data);
-      // Perform any necessary actions with the received message
     }
   });
 

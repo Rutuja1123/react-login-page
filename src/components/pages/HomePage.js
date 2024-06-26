@@ -9,7 +9,7 @@ function Home() {
     axios.defaults.withCredentials = true;
     let currentState = '';
     useEffect(() => {
-      axios.get('http://localhost:8001')
+      axios.get('http://example-backend.com')
       .then( res => {
         console.log(currentState = res.data.Status)
         if (currentState === "success"){
@@ -21,7 +21,7 @@ function Home() {
     });
 
     const handleDelete = () => {
-      axios.get('http://localhost:8001/logout')
+      axios.get('http://example-backend.com/logout')
       .then(res => {
         window.location.reload(true);
       }).catch(err => console.log(err));
@@ -51,7 +51,7 @@ function Home() {
             <Link to="/login"
               className="w-full bg-blue-500 text-black px-4 py-2 rounded-lg focus:outline-none"
             >
-              LogOut
+              LogIn
             </Link></div>
           </div>
           }

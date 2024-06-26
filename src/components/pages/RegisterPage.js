@@ -14,8 +14,7 @@ function Register() {
     let currentState = '';
     const handleSubmit = (event) => {
       event.preventDefault();
-      // axios.post("http://localhost:8001/register", values)
-      axios.post("https://lwa-poc-backend.vercel.app/register", values)
+      axios.post("https://example-backend.com/register", values)
       .then((res) => console.log(currentState = res.data.Status))
       .then((res) => {
         if(currentState === "success"){
