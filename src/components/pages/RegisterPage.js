@@ -1,38 +1,101 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, {useState} from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-import '../../App.css'
+function Register() {
+    const [values, setValues] = useState({
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+    })
 
-export default function SignUpPage() {
+    const navigate = useNavigate();
+    let currentState = '';
+    const handleSubmit = (event) => {
+      event.preventDefault();
+      // axios.post("http://localhost:8001/register", values)
+      axios.post("https://lwa-poc-backend.vercel.app/register", values)
+      .then((res) => console.log(currentState = res.data.Status))
+      .then((res) => {
+        if(currentState === "success"){
+          navigate('/login');
+        }
+      })
+      .then(err => console.log(err ));
+    }
 
     return (
-        <div className="text-center m-5-auto">
-            <h2>Join us</h2>
-            <h5>Create your personal account</h5>
-            <form action="/home">
-                <p>
-                    <label>Username</label><br/>
-                    <input type="text" name="first_name" required />
-                </p>
-                <p>
-                    <label>Email address</label><br/>
-                    <input type="email" name="email" required />
-                </p>
-                <p>
-                    <label>Password</label><br/>
-                    <input type="password" name="password" requiredc />
-                </p>
-                <p>
-                    <input type="checkbox" name="checkbox" id="checkbox" required /> <span>I agree all statements in <a href="https://google.com" target="_blank" rel="noopener noreferrer">terms of service</a></span>.
-                </p>
-                <p>
-                    <button id="sub_btn" type="submit">Register</button>
-                </p>
-            </form>
-            <footer>
-                <p><Link to="/">Back to Homepage</Link>.</p>
-            </footer>
+      <div className="flex items-center justify-center h-screen select-none">
+        <div className="p-4 rounded-lg shadow-lg max-w-sm w-full">
+          <h2 className="text-2xl font-semibold text-center mb-4">
+            Register 
+          </h2>
+          <form className="py-3 gap-y-3" onSubmit={handleSubmit}>
+            <div className='flex flex-row gap-2'>
+            <div className="mb-2">
+              <input
+                type="text"
+                className="form-input w-full px-4 py-2 border rounded-lg text-gray-700"
+                required
+                placeholder="Enter First name"
+                onChange={e => setValues({...values, firstName: e.target.value})}
+              />
+            </div>
+            <div className="mb-2">
+              <input
+                type="emial"
+                className="form-input w-full px-4 py-2 border rounded-lg text-gray-700"
+                required
+                placeholder="Enter last name"
+                onChange={e => setValues({...values, lastName: e.target.value})}
+              />
+            </div>
+            </div>
+            <div className="mb-2">
+              <input
+                type="emial"
+                className="form-input w-full px-4 py-2 border rounded-lg text-gray-700"
+                required
+                placeholder="Enter Email"
+                onChange={e => setValues({...values, email: e.target.value})}
+              />
+            </div>
+  
+            <div className="mb-2">
+              <input
+                type="password"
+                className="form-input w-full px-4 py-2 border rounded-lg text-gray-700"
+                required
+                placeholder="Enter Password"
+                onChange={e => setValues({...values, password: e.target.value})}
+              />
+            </div>
+           
+            <div className="mb-4">
+              <button
+                className="w-full bg-blue-500 text-black px-4 py-2 rounded-lg focus:outline-none"
+                type="submit"
+              >
+                Register
+              </button>
+            </div>
+            
+            <div className="flex flex-row p-2">
+              <div>
+                <span className="line pr-5 text-blue-600">
+                  Don't have an account?
+                </span>
+              </div>
+              <div className="text-gray-600 font-semibold text-lg cursor-pointer hover:text-blue-500">
+              <Link to="/">Login</Link>
+            </div>
+            </div>
+          </form>
         </div>
-    )
-
-}
+      </div>
+    );
+  }
+  
+  export default Register;
+  
